@@ -29,6 +29,7 @@ jobs:
           template: classic
           base: header, activity, community, repositories, metadata
           config_timezone: Europe/London
+          repositories_skipped: profile-metrics, MessageLoggerV2-fixed, UCS-7.4.0, LegacyClashServer, pogo-s2, Orcus1.9.1-SourceCode, NitroSniper
           plugin_languages: yes
           plugin_languages_analysis_timeout: 15
           plugin_languages_analysis_timeout_repositories: 7.5
