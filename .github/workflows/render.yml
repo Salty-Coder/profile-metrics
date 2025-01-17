@@ -34,7 +34,7 @@ jobs:
           plugin_languages_indepth: yes
           plugin_languages_analysis_timeout: 50
           plugin_languages_analysis_timeout_repositories: 10
-          commits_authoring: firstname, username, 59771980+Salty-Coder@users.noreply.github.com, ${{ secrets.EMAIL }}
+          commits_authoring: Ben, Salty-Coder, 59771980+Salty-Coder@users.noreply.github.com, ${{ secrets.EMAIL }}
           plugin_languages_indepth_custom: Salty-Coder/the-most-stupid-game-on-roblox
           plugin_languages_details: lines, bytes-size
           plugin_languages_colors: github
