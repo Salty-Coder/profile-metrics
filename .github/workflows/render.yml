@@ -31,6 +31,7 @@ jobs:
           config_timezone: Europe/London
           repositories_skipped: profile-metrics, MessageLoggerV2-fixed, UCS-7.4.0, LegacyClashServer, pogo-s2, Orcus1.9.1-SourceCode, NitroSniper, BTRoblox-DevEx-old, salty-site-status, github-stats-transparent
           plugin_languages: yes
+          plugin_languages_details: percentage
           plugin_languages_colors: github
           plugin_languages_limit: 8
           plugin_languages_other: yes
