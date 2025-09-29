@@ -32,11 +32,12 @@ jobs:
           repositories_skipped: profile-metrics, MessageLoggerV2-fixed, UCS-7.4.0, LegacyClashServer, pogo-s2, Orcus1.9.1-SourceCode, NitroSniper, BTRoblox-DevEx-old, BTRoblox-DevEx, salty-site-status, github-stats-transparent, Cadburys-Bypass, BetterDiscordAddons, RoCAT, AiSponge, RemovedConnectionAlerts, sponge-ai, discord-token-generator, discord-nitro-sniper, adobe-discord-rpc, Xmrig-Python, bloxflip-predictor-patched, Rock-Paper-Scissors, Discord-Exploit-Collection 
           plugin_languages: yes
           plugin_languages_colors: github
-          plugin_languages_limit: 9
-          plugin_languages_other: no
+          #plugin_languages_limit: 9
+          plugin_languages_other: true
           plugin_languages_sections: most-used
-          plugin_languages_threshold: 1%
+          #plugin_languages_threshold: 1%
           plugin_languages_indepth: true
           plugin_languages_analysis_timeout: 60
-          plugin_languages_analysis_timeout_repositories: 4
+          plugin_languages_analysis_timeout_repositories: 10
+          commits_authoring: 59771980+Salty-Coder@users.noreply.github.com, Salty-Coder
           
