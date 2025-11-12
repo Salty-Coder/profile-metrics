@@ -12,48 +12,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout target repo
-        uses: actions/checkout@v4
-        with:
-          repository: Salty-Coder/Harmless-Asset-Manager
-          token: ${{ secrets.METRICS_TOKEN }}
-          path: target-repo
-
-      - name: Repo overall contributors (git shortlog)
-        run: |
-          cd target-repo
-          echo "=== git shortlog - commits per author (most to least) ==="
-          git shortlog -sne | sed -n '1,200p'
-
-      - name: Show all commits authored by your identity
-        run: |
-          cd target-repo
-          echo "=== Commits authored by Salty-Coder <59771980+Salty-Coder@users.noreply.github.com> ==="
-          git log --pretty=format:"%H %aN <%aE> %ad %s" --date=short --author='59771980+Salty-Coder@users.noreply.github.com' || true
-
-      - name: Summarize lines added/deleted and files changed by your authored commits
-        run: |
-          cd target-repo
-          echo "=== numstat for commits authored by your identity (insertion deletion filename) ==="
-          git log --author='59771980+Salty-Coder@users.noreply.github.com' --numstat --pretty="%H" |
-            awk 'NF==3 {ins+=$1; del+=$2; files++} END {print "total_insertions:",ins; print "total_deletions:",del; print "numstat_rows:",files}'
-          echo
-          echo "To see per-file totals (lines added by file):"
-          git log --author='59771980+Salty-Coder@users.noreply.github.com' --numstat --pretty="%H" |
-            awk 'NF==3{a[$3]+=$1; b[$3]+=$2} END{for (f in a) print a[f], b[f], f}' | sort -rn | sed -n '1,200p' || true
-
-      - name: List distinct files and extensions edited by your authored commits
-        run: |
-          cd target-repo
-          echo "=== Files touched by your authored commits (counted) ==="
-          git log --author='59771980+Salty-Coder@users.noreply.github.com' --name-only --pretty=format:"" |
-            sed '/^$/d' | sort | uniq -c | sort -rn | sed -n '1,200p'
-          echo
-          echo "=== File extensions touched (help identify languages) ==="
-          git log --author='59771980+Salty-Coder@users.noreply.github.com' --name-only --pretty=format:"" |
-            sed '/^$/d' | sed -n '1,2000p' | sed -E 's/.*\.([^.\/]+)$/\1/' | sort | uniq -c | sort -rn | sed -n '1,200p' || true
-
-      - name: Run LowLighter metrics (indepth for one repo)
+      - name: Run LowLighter metrics
         uses: Salty-Coder/lowlighter-metrics@master
         with:
           # Your GitHub token
@@ -79,9 +38,6 @@ jobs:
           plugin_languages_sections: most-used
 
           plugin_languages_indepth: yes
-          plugin_languages_indepth_custom: Salty-Coder/Harmless-Asset-Manager
           commits_authoring: "Salty-Coder, 59771980+Salty-Coder@users.noreply.github.com"
-          plugin_languages_details: lines, bytes-size
           plugin_languages_analysis_timeout: 60
           plugin_languages_analysis_timeout_repositories: 30
-          plugin_languages_ignored: html, css
