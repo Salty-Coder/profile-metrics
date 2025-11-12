@@ -12,7 +12,22 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: lowlighter/metrics@latest
+      - name: List commit authors in target repo
+        uses: actions/checkout@v4
+        with:
+          repository: Salty-Coder/Harmless-Asset-Manager
+          token: ${{ secrets.METRICS_TOKEN }}
+          path: target-repo
+      - name: Show distinct author names and emails (most frequent first)
+        run: |
+          cd target-repo
+          echo "=== Distinct authors (author name <email>) with counts ==="
+          git log --pretty=format:"%aN <%aE>" | sort | uniq -c | sort -rn | sed -n '1,200p'
+          echo
+          echo "=== Distinct committer names and emails with counts ==="
+          git log --pretty=format:"%cN <%cE>" | sort | uniq -c | sort -rn | sed -n '1,200p'
+      - name: Run LowLighter metrics (indepth for one repo)
+        uses: lowlighter/metrics@latest
         with:
           # Your GitHub token
           # The following scopes are required:
@@ -42,3 +57,4 @@ jobs:
           plugin_languages_details: lines, bytes-size
           plugin_languages_analysis_timeout: 60
           plugin_languages_analysis_timeout_repositories: 30
+          plugin_languages_ignored: html, css
