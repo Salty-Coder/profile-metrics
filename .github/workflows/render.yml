@@ -12,20 +12,47 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: List commit authors in target repo
+      - name: Checkout target repo
         uses: actions/checkout@v4
         with:
           repository: Salty-Coder/Harmless-Asset-Manager
           token: ${{ secrets.METRICS_TOKEN }}
           path: target-repo
-      - name: Show distinct author names and emails (most frequent first)
+
+      - name: Repo overall contributors (git shortlog)
         run: |
           cd target-repo
-          echo "=== Distinct authors (author name <email>) with counts ==="
-          git log --pretty=format:"%aN <%aE>" | sort | uniq -c | sort -rn | sed -n '1,200p'
+          echo "=== git shortlog - commits per author (most to least) ==="
+          git shortlog -sne | sed -n '1,200p'
+
+      - name: Show all commits authored by your identity
+        run: |
+          cd target-repo
+          echo "=== Commits authored by Salty-Coder <59771980+Salty-Coder@users.noreply.github.com> ==="
+          git log --pretty=format:"%H %aN <%aE> %ad %s" --date=short --author='59771980+Salty-Coder@users.noreply.github.com' || true
+
+      - name: Summarize lines added/deleted and files changed by your authored commits
+        run: |
+          cd target-repo
+          echo "=== numstat for commits authored by your identity (insertion deletion filename) ==="
+          git log --author='59771980+Salty-Coder@users.noreply.github.com' --numstat --pretty="%H" |
+            awk 'NF==3 {ins+=$1; del+=$2; files++} END {print "total_insertions:",ins; print "total_deletions:",del; print "numstat_rows:",files}'
           echo
-          echo "=== Distinct committer names and emails with counts ==="
-          git log --pretty=format:"%cN <%cE>" | sort | uniq -c | sort -rn | sed -n '1,200p'
+          echo "To see per-file totals (lines added by file):"
+          git log --author='59771980+Salty-Coder@users.noreply.github.com' --numstat --pretty="%H" |
+            awk 'NF==3{a[$3]+=$1; b[$3]+=$2} END{for (f in a) print a[f], b[f], f}' | sort -rn | sed -n '1,200p' || true
+
+      - name: List distinct files and extensions edited by your authored commits
+        run: |
+          cd target-repo
+          echo "=== Files touched by your authored commits (counted) ==="
+          git log --author='59771980+Salty-Coder@users.noreply.github.com' --name-only --pretty=format:"" |
+            sed '/^$/d' | sort | uniq -c | sort -rn | sed -n '1,200p'
+          echo
+          echo "=== File extensions touched (help identify languages) ==="
+          git log --author='59771980+Salty-Coder@users.noreply.github.com' --name-only --pretty=format:"" |
+            sed '/^$/d' | sed -n '1,2000p' | sed -E 's/.*\.([^.\/]+)$/\1/' | sort | uniq -c | sort -rn | sed -n '1,200p' || true
+
       - name: Run LowLighter metrics (indepth for one repo)
         uses: lowlighter/metrics@latest
         with:
@@ -47,7 +74,7 @@ jobs:
           repositories_skipped: profile-metrics, MessageLoggerV2-fixed, UCS-7.4.0, LegacyClashServer, pogo-s2, Orcus1.9.1-SourceCode, NitroSniper, BTRoblox-DevEx-old, BTRoblox-DevEx, salty-site-status, github-stats-transparent, Cadburys-Bypass, BetterDiscordAddons, RoCAT, AiSponge, RemovedConnectionAlerts, sponge-ai, discord-token-generator, discord-nitro-sniper, adobe-discord-rpc, Xmrig-Python, bloxflip-predictor-patched, Rock-Paper-Scissors, Discord-Exploit-Collection 
           plugin_languages: yes
           plugin_languages_colors: github
-          plugin_languages_limit: 9
+          plugin_languages_limit: 8
           plugin_languages_other: true
           plugin_languages_sections: most-used
 
