@@ -54,7 +54,7 @@ jobs:
             sed '/^$/d' | sed -n '1,2000p' | sed -E 's/.*\.([^.\/]+)$/\1/' | sort | uniq -c | sort -rn | sed -n '1,200p' || true
 
       - name: Run LowLighter metrics (indepth for one repo)
-        uses: lowlighter/metrics@latest
+        uses: Salty-Coder/lowlighter-metrics@master
         with:
           # Your GitHub token
           # The following scopes are required:
