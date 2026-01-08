@@ -12,7 +12,7 @@ jobs:
       contents: write
     steps:
       - name: Run LowLighter metrics
-        uses: Salty-Coder/lowlighter-metrics@master
+        uses: bns34/lowlighter-metrics@master
         with:
           # Your GitHub token
           # The following scopes are required:
@@ -25,11 +25,11 @@ jobs:
           token: ${{ secrets.METRICS_TOKEN }}
 
           # Options
-          user: Salty-Coder
+          user: bns34
           template: classic
           base: header, activity, community, repositories, metadata
           config_timezone: Europe/London
-          repositories_skipped: profile-metrics, MessageLoggerV2-fixed, UCS-7.4.0, LegacyClashServer, pogo-s2, Orcus1.9.1-SourceCode, NitroSniper, BTRoblox-DevEx-old, BTRoblox-DevEx, salty-site-status, github-stats-transparent, Cadburys-Bypass, BetterDiscordAddons, RoCAT, AiSponge, RemovedConnectionAlerts, sponge-ai, discord-token-generator, discord-nitro-sniper, adobe-discord-rpc, Xmrig-Python, bloxflip-predictor-patched, Rock-Paper-Scissors, Discord-Exploit-Collection 
+          repositories_skipped: profile-metrics, MessageLoggerV2-fixed, UCS-7.4.0, LegacyClashServer, pogo-s2, NitroSniper, BTRoblox-DevEx-old, BTRoblox-DevEx, salty-site-status, github-stats-transparent, Cadburys-Bypass, BetterDiscordAddons, RoCAT, AiSponge, RemovedConnectionAlerts, sponge-ai, discord-token-generator, discord-nitro-sniper, bloxflip-predictor-patched, Rock-Paper-Scissors, Discord-Exploit-Collection, PreMiD-Activities, lowlighter-metrics 
           plugin_languages: yes
           plugin_languages_colors: github
           plugin_languages_limit: 8
